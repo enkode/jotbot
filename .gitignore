@@ -1,0 +1,9 @@
+node_modules
+dist
+release
+.agent
+.gemini
+brain
+knowledge
+.DS_Store
+*.log

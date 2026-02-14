@@ -1,0 +1,471 @@
+:root {
+    --bg-color: #1e1e1e;
+    --fg-color: #d4d4d4;
+    --dim-color: #3c3c3c;
+    --accent-color: #007acc;
+    --font-size: 14px;
+    --font-mono: 'Consolas', 'Courier New', monospace;
+    --tab-height: 32px;
+}
+
+[data-theme="modern"] {
+    --bg-color: #1e1e1e;
+    --fg-color: #d4d4d4;
+    --dim-color: #333333;
+    --accent-color: #007acc;
+}
+
+[data-theme="green"] {
+    --bg-color: #050505;
+    --fg-color: #00ff00;
+    --dim-color: #004400;
+    --accent-color: #00ff00;
+}
+
+[data-theme="amber"] {
+    --bg-color: #1a1000;
+    --fg-color: #ffb000;
+    --dim-color: #4a3200;
+    --accent-color: #ffb000;
+}
+
+[data-theme="cyan"] {
+    --bg-color: #001010;
+    --fg-color: #00ffff;
+    --dim-color: #004444;
+    --accent-color: #00ffff;
+}
+
+[data-crt="none"] .crt-overlay {
+    display: none;
+}
+
+[data-crt="low"] .crt-overlay {
+    opacity: 0.05;
+}
+
+[data-crt="medium"] .crt-overlay {
+    opacity: 0.1;
+}
+
+[data-crt="high"] .crt-overlay {
+    opacity: 0.2;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+
+body {
+    background: transparent;
+    font-family: var(--font-mono);
+    display: block;
+    text-align: left;
+}
+
+/* Widget Mode Body Override */
+body.widget-mode-active {
+    background: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.app-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background-color: var(--bg-color);
+    color: var(--fg-color);
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid #333;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    text-align: left;
+}
+
+/* Header */
+.title-drag-region {
+    height: 28px;
+    background: #252526;
+    border-bottom: 1px solid var(--dim-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+    -webkit-app-region: drag;
+    user-select: none;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+    opacity: 1;
+    color: #ccc;
+    flex-shrink: 0;
+}
+
+.title-drag-region button {
+    -webkit-app-region: no-drag;
+}
+
+.window-controls {
+    display: flex;
+    gap: 5px;
+}
+
+.settings-btn {
+    opacity: 0.6;
+    color: inherit;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 2px;
+    display: flex;
+    align-items: center;
+}
+
+.settings-btn:hover {
+    opacity: 1;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+}
+
+/* Editor Area */
+.editor-area {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+    position: relative;
+    padding: 0;
+    background: var(--bg-color);
+    min-height: 0;
+}
+
+/* Line Numbers */
+.line-numbers {
+    width: 24px;
+    min-width: 24px;
+    background: #252526;
+    color: #555;
+    text-align: right;
+    padding-right: 6px;
+    padding-left: 0;
+    padding-top: 5px;
+    font-size: var(--font-size);
+    line-height: 1.5;
+    user-select: none;
+    overflow: hidden;
+    border-right: 1px solid var(--dim-color);
+    flex-shrink: 0;
+}
+
+.main-textarea {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: var(--fg-color);
+    font-family: var(--font-mono);
+    font-size: var(--font-size);
+    line-height: 1.5;
+    resize: none;
+    outline: none;
+    padding: 5px 10px;
+    margin: 0;
+    white-space: pre;
+    overflow: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--dim-color) transparent;
+}
+
+/* Bottom Tabs */
+.bottom-tabs {
+    height: var(--tab-height);
+    background: #252526;
+    display: flex;
+    align-items: center;
+    overflow-x: auto;
+    border-top: 1px solid var(--dim-color);
+    padding-left: 0;
+    flex-shrink: 0;
+    z-index: 10;
+}
+
+.tabs-scroll-area {
+    display: flex;
+    flex: 1;
+    overflow-x: auto;
+    height: 100%;
+}
+
+.tabs-scroll-area::-webkit-scrollbar {
+    display: none;
+}
+
+.tab {
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    height: 100%;
+    cursor: pointer;
+    font-size: 11px;
+    color: #888;
+    background: transparent;
+    border-right: 1px solid #333;
+    /* dynamic width */
+    min-width: auto;
+    max-width: none;
+    user-select: none;
+    position: relative;
+    transition: background 0.1s;
+}
+
+.tab:hover {
+    background: #2d2d2d;
+    color: #eee;
+}
+
+.tab.active {
+    background: var(--bg-color);
+    color: #fff;
+    border-top: 2px solid var(--accent-color);
+    margin-top: -1px;
+}
+
+.tab-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* Flex 1 removed to allow shrink wrap */
+}
+
+.tab-edit-input {
+    background: #3c3c3c;
+    color: #fff;
+    border: 1px solid #007acc;
+    padding: 2px;
+    font-size: 11px;
+    width: 80%;
+    outline: none;
+    border-radius: 2px;
+}
+
+.tab-icon {
+    margin-left: 6px;
+    padding: 1px;
+    border-radius: 50%;
+    opacity: 0.6;
+    display: flex;
+    font-size: 10px;
+    width: 14px;
+    height: 14px;
+    align-items: center;
+    justify-content: center;
+}
+
+.tab-close {
+    opacity: 0;
+    /* Default hidden until hover */
+}
+
+.tab:hover .tab-close {
+    opacity: 0.6;
+}
+
+.tab-close:hover {
+    opacity: 1;
+    background: #cc3333;
+    color: white;
+}
+
+.lock-icon {
+    opacity: 0.8;
+    color: var(--accent-color);
+}
+
+
+.add-tab {
+    padding: 0 12px;
+    cursor: pointer;
+    opacity: 0.7;
+    min-width: auto;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.add-tab:hover {
+    opacity: 1;
+    color: #fff;
+    background: #333;
+}
+
+/* Settings Flyout */
+.settings-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 90;
+    background: transparent;
+}
+
+.settings-flyout {
+    position: absolute;
+    top: 32px;
+    right: 5px;
+    background: #252526;
+    border: 1px solid #454545;
+    padding: 8px;
+    z-index: 100;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    width: 180px;
+    border-radius: 3px;
+    text-align: left;
+}
+
+.settings-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+    font-size: 11px;
+    color: #ccc;
+}
+
+.settings-row:last-child {
+    margin-bottom: 0;
+}
+
+.settings-row select,
+.settings-row input {
+    background: #3c3c3c;
+    color: #fff;
+    border: 1px solid #555;
+    padding: 2px 4px;
+    font-size: 11px;
+    border-radius: 2px;
+}
+
+/* WIDGET ICON MODE */
+.widget-icon {
+    width: 60px;
+    height: 60px;
+    background: var(--bg-color);
+    border: 2px solid var(--accent-color);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--accent-color);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.widget-icon:hover {
+    transform: scale(1.05);
+    filter: brightness(1.2);
+}
+
+.widget-drag {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0;
+}
+
+/* CRT Effects */
+@keyframes scanline {
+    0% {
+        background-position: 0 0;
+    }
+
+    100% {
+        background-position: 0 100%;
+    }
+}
+
+@keyframes flicker {
+    0% {
+        opacity: 0.95;
+    }
+
+    5% {
+        opacity: 0.85;
+    }
+
+    10% {
+        opacity: 0.95;
+    }
+
+    15% {
+        opacity: 1;
+    }
+
+    20% {
+        opacity: 0.9;
+    }
+
+    50% {
+        opacity: 0.95;
+    }
+
+    80% {
+        opacity: 0.98;
+    }
+
+    90% {
+        opacity: 0.92;
+    }
+
+    100% {
+        opacity: 0.95;
+    }
+}
+
+.crt-overlay {
+    pointer-events: none;
+    z-index: 999;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    background-size: 100% 4px, 3px 100%;
+    animation: scanline 0.15s linear infinite;
+    /* Fast moving scanlines */
+    opacity: 0;
+}
+
+[data-crt="none"] .crt-overlay {
+    display: none;
+}
+
+[data-crt="low"] .crt-overlay {
+    opacity: 0.15;
+    animation: scanline 60s linear infinite;
+    /* Very slow scan */
+}
+
+[data-crt="medium"] .crt-overlay {
+    opacity: 0.3;
+    animation: scanline 30s linear infinite, flicker 0.5s infinite;
+    /* Slow scan, relaxed flicker */
+}
+
+[data-crt="high"] .crt-overlay {
+    opacity: 0.5;
+    background-size: 100% 8px, 3px 100%;
+    animation: scanline 15s linear infinite, flicker 0.3s infinite;
+}
