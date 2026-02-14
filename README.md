@@ -2,7 +2,9 @@
 
 **jot.bot** is a terminal-themed sticky note widget for Windows. It is built with Electron, React, and Vite.
 
-![App Screenshot](public/tray.png)
+![Main Demo](media/jot.bot_OHiApjKGrK.gif)
+
+![Feature Demo](media/jot.bot_TX4gweK1p1.gif)
 
 ## Features
 
